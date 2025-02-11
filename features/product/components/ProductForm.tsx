@@ -7,7 +7,7 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from '@/components/ui/input';
 import { productFormSchema, ProductFormData } from '../schemas/productSchema';
 import { toast } from '@/hooks/use-toast';
-import { ProductService } from '../services/productService';
+import ProductService from '../services/productService';
 
 interface ProductFormProps {
   initialValues?: ProductFormData; // initialValues có thể không có (tạo mới)
@@ -22,10 +22,10 @@ export const ProductForm = ({ initialValues }: ProductFormProps) => {
   async function onSubmit(data: ProductFormData) {
     try {
       if (initialValues?.id) {
-        await ProductService.updateProduct(initialValues.id, data);
+        await ProductService.update(initialValues.id, data);
         toast({ title: "Cập nhật sản phẩm thành công!" });
       } else {
-        await ProductService.createProduct(data);
+        await ProductService.create(data);
         toast({ title: "Thêm sản phẩm thành công!" });
       }
     } catch (error) {

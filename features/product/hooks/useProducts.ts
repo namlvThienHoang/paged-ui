@@ -1,7 +1,7 @@
 import { useMemo, useCallback } from 'react';
 import useSWR from 'swr';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { ProductService } from '../services/productService';
+import ProductService from '../services/productService';
 import { ProductQueryParams, ProductResponse } from '../types/product';
 
 export function useProducts() {
@@ -62,7 +62,7 @@ export function useProducts() {
 export const useProductById = (id: number) => {
   const { data, error, mutate } = useSWR(
     '/products/' + id, 
-    () => ProductService.getProductById(id)
+    () => ProductService.getById(id)
   );
 
   return {
