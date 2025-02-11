@@ -78,7 +78,7 @@ export function DataTable<TData>({
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
                   <TableHead key={header.id} className="px-4 py-2">
-                    {header.column.columnDef.header}
+                    {header.column.columnDef.header ?? ''}
                   </TableHead>
                 ))}
                 {rowActions && <TableHead className="px-4 py-2">Hành động</TableHead>}
