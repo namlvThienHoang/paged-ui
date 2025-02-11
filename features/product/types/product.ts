@@ -16,3 +16,11 @@ export type Product = {
     sortBy?: string; // Trường cần sắp xếp
     order?: 'asc' | 'desc'; // Thứ tự sắp xếp
   }
+
+
+  export interface ProductResponse {
+    products?: Product[]; // Từ khóa tìm kiếm
+    total?: number; // Số lượng sản phẩm trên mỗi trang
+    skip?: number; // Số sản phẩm cần bỏ qua (pagination)
+    limit?: number; // Trường cần sắp xếp
+  }

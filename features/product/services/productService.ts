@@ -1,13 +1,13 @@
 import apiClient from '@/lib/api/client';
-import { Product, ProductQueryParams } from '../types/product';
+import { Product, ProductQueryParams, ProductResponse } from '../types/product';
 import { ProductFormData } from '../schemas/productSchema';
 
 
 
 export const ProductService = {
-  getProducts: async (params: ProductQueryParams = {}): Promise<Product[]> => {
+  getProducts: async (params: ProductQueryParams): Promise<ProductResponse> => {
     const response = await apiClient.get('/products/search', { params });
-    return response.data.products; // Giả sử API trả về { products: Product[], total: number }
+    return response.data; // Giả sử API trả về { products: Product[], total: number }
   },
 
   getProductById: async (id: number): Promise<Product> => {
