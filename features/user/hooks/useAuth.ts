@@ -7,5 +7,10 @@ export function useAuth() {
   if (!context) {
     throw new Error('useAuth phải được sử dụng bên trong AuthProvider');
   }
-  return context;
+  // return context;
+  return {
+    isAdmin: context?.user?.email === 'admin',
+    isCustomer: context?.user?.email === 'customer',
+    context,
+  };
 }

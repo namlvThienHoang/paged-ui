@@ -12,7 +12,7 @@ import { setCookie } from '@/lib/api/cookie';
 
 const LoginPage = () => {
   const router = useRouter();
-  const { setUser } = useAuth();
+  const { context, isAdmin, isCustomer } = useAuth();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -33,16 +33,22 @@ const LoginPage = () => {
 
       // Lưu token vào cookie để middleware có thể đọc (lưu 1 ngày với accessToken, 7 ngày với refreshToken)
       setCookie('accessToken', data.accessToken, 1);
+      setCookie('role', 'admin', 7);
       setCookie('refreshToken', data.refreshToken, 7);
 
       // Lưu thông tin người dùng vào localStorage để sử dụng trong Auth Context
       localStorage.setItem('user', JSON.stringify(data));
 
       // Cập nhật Auth Context
-      setUser(data);
+      context.setUser(data);
 
       // Chuyển hướng về trang chính (hoặc dashboard)
-      router.push('/');
+      if(isAdmin) {
+        router.push('/dashboad');
+      }
+      else {
+        router.push('/shop');
+      }
     } catch (err: any) {
       console.error('Lỗi đăng nhập:', err);
       setError('Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin đăng nhập.');
