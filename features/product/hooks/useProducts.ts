@@ -1,4 +1,4 @@
-import { useMemo, useCallback } from 'react';
+import { useMemo, useCallback, useState, useEffect } from 'react';
 import useSWR from 'swr';
 import { useRouter, useSearchParams } from 'next/navigation';
 import ProductService from '../services/productService';
@@ -57,7 +57,24 @@ export function useProducts() {
   };
 }
 
+export const useCars = (params: ProductQueryParams) => {
+  const { data, error, isLoading } = useSWR<ProductResponse>(
+    ['/products/search', params],
+    () => ProductService.getProducts(params),
+    {
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+    }
+  );
 
+
+  return {
+    products: data?.products || [],
+    total: data?.total || 0,
+    isLoading,
+    isError: error
+  }
+};
 
 export const useProductById = (id: number) => {
   const { data, error, mutate } = useSWR(
